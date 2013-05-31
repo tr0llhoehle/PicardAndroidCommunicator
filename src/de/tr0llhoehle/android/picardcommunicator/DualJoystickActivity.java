@@ -5,7 +5,10 @@ import com.MobileAnarchy.Android.Widgets.Joystick.JoystickMovedListener;
 import com.MobileAnarchy.Android.Widgets.Joystick.JoystickView;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -86,7 +89,11 @@ public class DualJoystickActivity extends Activity {
 	    // Handle item selection
 	    switch (item.getItemId()) {
 	        case R.id.action_settings:
-	            Toast.makeText(this, "settings pressed", Toast.LENGTH_SHORT).show();
+	        	//SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+	        	//String bla = sharedPref.getString("username", "");
+	            //Toast.makeText(this, bla, Toast.LENGTH_SHORT).show();
+	            Intent myIntent = new Intent(this, SettingsActivity.class);
+	            startActivity(myIntent);
 	            return true;
 	        default:
 	            return super.onOptionsItemSelected(item);

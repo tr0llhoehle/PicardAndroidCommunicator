@@ -22,6 +22,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="de.tr0llhoehle.android.picardcommunicator.SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:parentActivityName="de.tr0llhoehle.android.picardcommunicator.DualJoystickActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="de.tr0llhoehle.android.picardcommunicator.DualJoystickActivity" />
+        </activity>
     </application>
 
 </manifest>
