@@ -10,8 +10,8 @@
     <ignored path=".idea/workspace.xml" />
     <file path="/Dummy.txt" changelist="1843218e-ee06-440b-a7c6-1221d3b918cd" time="1370106133887" ignored="false" />
     <file path="/fragment.java" changelist="1843218e-ee06-440b-a7c6-1221d3b918cd" time="1370020771749" ignored="false" />
-    <file path="/Communicator.java" changelist="1843218e-ee06-440b-a7c6-1221d3b918cd" time="1370111516036" ignored="false" />
-    <file path="/DualJoystickActivity.java" changelist="1843218e-ee06-440b-a7c6-1221d3b918cd" time="1370021501661" ignored="false" />
+    <file path="/Communicator.java" changelist="1843218e-ee06-440b-a7c6-1221d3b918cd" time="1370117491228" ignored="false" />
+    <file path="/DualJoystickActivity.java" changelist="1843218e-ee06-440b-a7c6-1221d3b918cd" time="1370116980736" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,7 +62,23 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </breakpoint_any>
-    <line_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true" />
+    <line_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true">
+      <breakpoint url="file://$PROJECT_DIR$/src/de/tr0llhoehle/android/picardcommunicator/DualJoystickActivity.java" line="61" class="de.tr0llhoehle.android.picardcommunicator.DualJoystickActivity$1" package="de.tr0llhoehle.android.picardcommunicator">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="REMOVE_AFTER_HIT" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="true" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+    </line_breakpoints>
     <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_rules />
     <ui_properties />
@@ -76,7 +92,7 @@
       <file leaf-file-name="Communicator.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/de/tr0llhoehle/android/picardcommunicator/Communicator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="60" column="8" selection-start="1696" selection-end="1696" vertical-scroll-proportion="0.92443323">
+            <state line="66" column="34" selection-start="2107" selection-end="2107" vertical-scroll-proportion="0.34005037">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -84,10 +100,37 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="DatagramSocket.class" pinned="false" current="false" current-in-tab="false">
+        <entry file="jar://$APPLICATION_HOME_DIR$/sdk/platforms/android-17/android.jar!/java/net/DatagramSocket.class">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="73" column="19" selection-start="3264" selection-end="3264" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ClassLoader.class" pinned="false" current="false" current-in-tab="false">
+        <entry file="jar://$APPLICATION_HOME_DIR$/sdk/platforms/android-17/android.jar!/java/lang/ClassLoader.class">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="45" column="30" selection-start="2418" selection-end="2418" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="DualJoystickActivity.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/de/tr0llhoehle/android/picardcommunicator/DualJoystickActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="47" column="12" selection-start="1445" selection-end="1465" vertical-scroll-proportion="0.0">
+            <state line="66" column="0" selection-start="1948" selection-end="1948" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="JoystickView.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/MobileAnarchy/Android/Widgets/Joystick/JoystickView.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="431" column="0" selection-start="12632" selection-end="12632" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -334,12 +377,12 @@
       <workItem from="1370091491712" duration="8946000" />
       <workItem from="1370105770873" duration="85000" />
       <workItem from="1370105869812" duration="250000" />
-      <workItem from="1370106129701" duration="3579000" />
+      <workItem from="1370106129701" duration="9556000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="25845000" />
+    <option name="totallyTimeSpent" value="31822000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="18" width="1600" height="863" extended-state="0" />
@@ -498,11 +541,6 @@
         <state line="24" column="52" selection-start="1037" selection-end="1037" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/sdk/platforms/android-17/android.jar!/java/lang/ClassLoader.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="45" column="30" selection-start="2418" selection-end="2418" vertical-scroll-proportion="0.33169532" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="35" column="81" selection-start="1623" selection-end="1623" vertical-scroll-proportion="0.0">
@@ -519,16 +557,37 @@
         <state line="14" column="30" selection-start="510" selection-end="510" vertical-scroll-proportion="0.33169532" />
       </provider>
     </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/sdk/platforms/android-17/android.jar!/java/net/DatagramSocket.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="73" column="19" selection-start="3264" selection-end="3264" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/sdk/platforms/android-17/android.jar!/java/lang/ClassLoader.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="45" column="30" selection-start="2418" selection-end="2418" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/MobileAnarchy/Android/Widgets/Joystick/JoystickView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="431" column="0" selection-start="12632" selection-end="12632" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/de/tr0llhoehle/android/picardcommunicator/DualJoystickActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="12" selection-start="1445" selection-end="1465" vertical-scroll-proportion="0.0">
+        <state line="66" column="0" selection-start="1948" selection-end="1948" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/de/tr0llhoehle/android/picardcommunicator/Communicator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="60" column="8" selection-start="1696" selection-end="1696" vertical-scroll-proportion="0.92443323">
+        <state line="66" column="34" selection-start="2107" selection-end="2107" vertical-scroll-proportion="0.34005037">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

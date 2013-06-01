@@ -23,6 +23,7 @@ public class DualJoystickActivity extends Activity {
 
 	TextView txtX1, txtY1;
 	TextView txtX2, txtY2;
+    int lastspeed, lastdirection;
 	DualJoystickView joystick;
 	
 	private Communicator comm;
@@ -38,6 +39,9 @@ public class DualJoystickActivity extends Activity {
 		txtX2 = (TextView)findViewById(R.id.TextViewX2);
         txtY2 = (TextView)findViewById(R.id.TextViewY2);
 
+        lastspeed = 0;
+        lastdirection = 0;
+
         joystick = (DualJoystickView)findViewById(R.id.dualjoystickView);
         
         joystick.setOnJostickMovedListener(_listenerLeft, _listenerRight);
@@ -45,6 +49,8 @@ public class DualJoystickActivity extends Activity {
         try {
             this.comm = new Communicator(this);
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
             e.printStackTrace();
         }
     }
@@ -55,7 +61,15 @@ public class DualJoystickActivity extends Activity {
 		public void OnMoved(int pan, int tilt) {
 			txtX1.setText(Integer.toString(pan));
 			txtY1.setText(Integer.toString(tilt));
-		}
+            if(tilt != lastspeed) {
+                lastspeed = tilt;
+                try {
+                    comm.updateSpeed(tilt);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
 
 		@Override
 		public void OnReleased() {
@@ -66,12 +80,6 @@ public class DualJoystickActivity extends Activity {
 		public void OnReturnedToCenter() {
 			txtX1.setText("stopped");
 			txtY1.setText("stopped");
-			try {
-				comm.authenticate();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		};
 	}; 
 
@@ -81,7 +89,15 @@ public class DualJoystickActivity extends Activity {
 		public void OnMoved(int pan, int tilt) {
 			txtX2.setText(Integer.toString(pan));
 			txtY2.setText(Integer.toString(tilt));
-		}
+            if (lastdirection != pan) {
+                lastdirection = pan;
+                try {
+                    comm.updateDirection(pan);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
 
 		@Override
 		public void OnReleased() {

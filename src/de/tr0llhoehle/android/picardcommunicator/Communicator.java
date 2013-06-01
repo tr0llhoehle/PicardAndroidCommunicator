@@ -14,6 +14,7 @@ import org.json.*;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
 import android.os.Handler;
@@ -33,7 +34,7 @@ public class Communicator {
     private int sequence;
     private Handler handler;
 	
-	public Communicator(Activity context) throws IOException{
+	public Communicator(Activity context) throws IOException, JSONException {
 		this.context = context;
 		this.authenticated = false;
         this.sequence = 0;
@@ -43,7 +44,8 @@ public class Communicator {
         password = sharedPref.getString("password", "");
         String ip = sharedPref.getString("ip_address", "");
         addr = InetAddress.getByName(ip);
-        this.handler = new Handler();
+
+        authenticate();
 	}
 	
 	public void authenticate() throws IOException, JSONException {
@@ -53,17 +55,35 @@ public class Communicator {
 
 	}
 
-    public void updateDirection(int percentage) {
-
+    public void updateDirection(int percentage) throws JSONException {
+        if(authenticated) {
+            JSONObject obj = new JSONObject();
+            obj.put("sequence", sequence);
+            obj.put("command", "direction");
+            obj.put("percentage", percentage*10);
+            obj.put("username", username);
+            obj.put("hash", createResponse(username, realm, password, sequence, nonce));
+            handler.post(new Command(obj));
+            sequence = sequence+1;
+        }
     }
 
-    public void updateSpeed(int percentage) {
-        
+    public void updateSpeed(int percentage) throws JSONException {
+        if(authenticated) {
+            JSONObject obj = new JSONObject();
+            obj.put("sequence", sequence);
+            obj.put("command", "speed");
+            obj.put("percentage", percentage*10);
+            obj.put("username", username);
+            obj.put("hash", createResponse(username, realm, password, sequence, nonce));
+            handler.post(new Command(obj));
+            sequence = sequence+1;
+        }
     }
 
     private class Command implements Runnable {
         private JSONObject jcommand;
-        public void Command(JSONObject jcommand) {
+        public Command(JSONObject jcommand) {
             this.jcommand = jcommand;
         }
         public void run() {
@@ -71,9 +91,9 @@ public class Communicator {
             DatagramPacket packet = new DatagramPacket(buffer, buffer.length, addr, port);
 
             try {
+                socket = new DatagramSocket();
                 socket.send(packet);
-                socket.send(packet);
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -108,7 +128,10 @@ public class Communicator {
                 packet = new DatagramPacket(buffer, buffer.length);
                 socket.receive(packet);
                 obj = new JSONObject(new String(packet.getData()));
-
+                authenticated = true;
+                Looper.prepare();
+                handler = new Handler();
+                Looper.loop();
             } catch (Exception e) {
                 e.printStackTrace();
             }
