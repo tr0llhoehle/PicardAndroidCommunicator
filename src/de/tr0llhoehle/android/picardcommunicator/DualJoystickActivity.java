@@ -41,9 +41,13 @@ public class DualJoystickActivity extends Activity {
         joystick = (DualJoystickView)findViewById(R.id.dualjoystickView);
         
         joystick.setOnJostickMovedListener(_listenerLeft, _listenerRight);
-        
-        this.comm = new Communicator(this);
-	}
+
+        try {
+            this.comm = new Communicator(this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     private JoystickMovedListener _listenerLeft = new JoystickMovedListener() {
 

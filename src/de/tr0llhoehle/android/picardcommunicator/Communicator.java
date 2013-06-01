@@ -16,51 +16,74 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
+import android.os.Handler;
 
 public class Communicator {
 	
 	private Activity context;
 
 	private boolean authenticated;
+    private int port = 5005;
+    private DatagramSocket socket;
+    private InetAddress addr;
+    private String username;
+    private String password;
+    private String realm;
+    private String nonce;
+    private int sequence;
+    private Handler handler;
 	
-	public Communicator(Activity context) {
+	public Communicator(Activity context) throws IOException{
 		this.context = context;
 		this.authenticated = false;
+        this.sequence = 0;
+        socket = new DatagramSocket(port);
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this.context);
+        username = sharedPref.getString("username", "");
+        password = sharedPref.getString("password", "");
+        String ip = sharedPref.getString("ip_address", "");
+        addr = InetAddress.getByName(ip);
+        this.handler = new Handler();
 	}
 	
 	public void authenticate() throws IOException, JSONException {
 		this.authenticated = false;
 
-        CommandSender sender = new CommandSender();
-
-
-
-
-
-		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this.context);
-    	String username = sharedPref.getString("username", "");
-    	String password = sharedPref.getString("password", "");
-    	String ip = sharedPref.getString("ip_address", "");
-        sender.execute(username, password, ip);
-
+        new Authenticator().execute();
 
 	}
 
-    private class CommandSender extends AsyncTask<String, Integer, Long> {
-        private int port = 5005;
-        private DatagramSocket socket;
-        private boolean running;
-        private int direction; //from 10 to -10 right to left
-        private int speed; //from 10 to -10 low to high
+    public void updateDirection(int percentage) {
+
+    }
+
+    public void updateSpeed(int percentage) {
+        
+    }
+
+    private class Command implements Runnable {
+        private JSONObject jcommand;
+        public void Command(JSONObject jcommand) {
+            this.jcommand = jcommand;
+        }
+        public void run() {
+            byte[] buffer = jcommand.toString().getBytes();
+            DatagramPacket packet = new DatagramPacket(buffer, buffer.length, addr, port);
+
+            try {
+                socket.send(packet);
+                socket.send(packet);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private class Authenticator extends AsyncTask<String, Integer, Long> {
+
+
         protected Long doInBackground(String... params){
             try{
-                running = false;
-                String username = params[0];
-                String password = params[1];
-                String ip = params[2];
-                InetAddress addr = InetAddress.getByName(ip);
-                //socket.setReuseAddress(true);
-                socket = new DatagramSocket(port);
                 String message = "{\"sequence\":0, \"command\":\"requestauth\", \"username\":\""+username+"\"}";
                 byte[] buffer = message.getBytes();
                 DatagramPacket packet = new DatagramPacket(buffer, buffer.length, addr, port);
@@ -70,25 +93,21 @@ public class Communicator {
 
                 socket.receive(packet);
                 JSONObject obj = new JSONObject(new String(packet.getData()));
-                String realm = obj.getString("realm");
-                String nonce = obj.getString("nonce");
-                String sequence = obj.getString("sequence");
-                sequence = Integer.toString(Integer.valueOf(sequence)+1);
+                realm = obj.getString("realm");
+                nonce = obj.getString("nonce");
+                sequence = Integer.valueOf(obj.getString("sequence"));
+                sequence = sequence+1;
                 String response = createResponse(username, realm, password, sequence, nonce);
                 message = "{\"sequence\":"+sequence+", \"command\":\"auth\", \"username\":\""+username+"\", \"nonce\":\""+nonce+"\", \"response\":\""+response+"\", \"realm\":\""+realm+"\"}";
 
                 buffer = message.getBytes();
                 packet = new DatagramPacket(buffer, buffer.length, addr, port);
                 socket.send(packet);
-                sequence = Integer.toString(Integer.valueOf(sequence)+1);
+                sequence = sequence+1;
                 buffer = new byte[1024];
                 packet = new DatagramPacket(buffer, buffer.length);
                 socket.receive(packet);
                 obj = new JSONObject(new String(packet.getData()));
-                running = true;
-                while(running) {
-                    Thread.sleep(500);
-                }
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -99,16 +118,8 @@ public class Communicator {
         }
 
 
-        public void updateDirection() {
-
-        }
-
-        public void updateSpeed() {
-
-        }
-
     }
-    public static String createResponse(String username, String realm, String password, String sequence, String nonce) {
+    public static String createResponse(String username, String realm, String password, int sequence, String nonce) {
         String ha1 = md5(username+":"+realm+":"+password);
         String bla = "AUTH:"+sequence;
         String ha2 = md5("AUTH:"+sequence);
