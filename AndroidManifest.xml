@@ -31,5 +31,7 @@
                 android:value="de.tr0llhoehle.android.picardcommunicator.DualJoystickActivity" />
         </activity>
     </application>
-
+	<uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE"></uses-permission>
 </manifest>

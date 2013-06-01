@@ -1,5 +1,9 @@
 package de.tr0llhoehle.android.picardcommunicator;
 
+import java.io.IOException;
+
+import org.json.JSONException;
+
 import com.MobileAnarchy.Android.Widgets.Joystick.DualJoystickView;
 import com.MobileAnarchy.Android.Widgets.Joystick.JoystickMovedListener;
 import com.MobileAnarchy.Android.Widgets.Joystick.JoystickView;
@@ -20,6 +24,8 @@ public class DualJoystickActivity extends Activity {
 	TextView txtX1, txtY1;
 	TextView txtX2, txtY2;
 	DualJoystickView joystick;
+	
+	private Communicator comm;
 		
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +41,8 @@ public class DualJoystickActivity extends Activity {
         joystick = (DualJoystickView)findViewById(R.id.dualjoystickView);
         
         joystick.setOnJostickMovedListener(_listenerLeft, _listenerRight);
+        
+        this.comm = new Communicator(this);
 	}
 
     private JoystickMovedListener _listenerLeft = new JoystickMovedListener() {
@@ -54,6 +62,12 @@ public class DualJoystickActivity extends Activity {
 		public void OnReturnedToCenter() {
 			txtX1.setText("stopped");
 			txtY1.setText("stopped");
+			try {
+				comm.authenticate();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		};
 	}; 
 
