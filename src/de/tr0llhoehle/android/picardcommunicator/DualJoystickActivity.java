@@ -64,7 +64,8 @@ public class DualJoystickActivity extends Activity {
             if(tilt != lastspeed) {
                 lastspeed = tilt;
                 try {
-                    comm.updateSpeed(tilt);
+                    if(comm != null)
+                        comm.updateSpeed(tilt);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -92,7 +93,8 @@ public class DualJoystickActivity extends Activity {
             if (lastdirection != pan) {
                 lastdirection = pan;
                 try {
-                    comm.updateDirection(pan);
+                    if(comm != null)
+                        comm.updateDirection(pan);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

@@ -73,7 +73,7 @@ public class Communicator {
             JSONObject obj = new JSONObject();
             obj.put("sequence", sequence);
             obj.put("command", "speed");
-            obj.put("percentage", percentage*10);
+            obj.put("percentage", percentage*-10);
             obj.put("username", username);
             obj.put("hash", createResponse(username, realm, password, sequence, nonce));
             handler.post(new Command(obj));
@@ -91,7 +91,6 @@ public class Communicator {
             DatagramPacket packet = new DatagramPacket(buffer, buffer.length, addr, port);
 
             try {
-                socket = new DatagramSocket();
                 socket.send(packet);
             } catch (Exception e) {
                 e.printStackTrace();
